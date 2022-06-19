@@ -1,0 +1,37 @@
+<mat-form-field *ngIf="settings.typed !== 'boolean'" class="add-item-field" appearance="fill">
+  <mat-label>{{settings.title}}</mat-label>
+  <ng-container [ngSwitch]="settings.typed">
+    <ng-container *ngSwitchCase="'number'">
+      <input matInput type="number" [placeholder]="settings.title" [formControl]="control">
+    </ng-container>
+    <ng-container  *ngSwitchCase="'date'">
+        <input [formControl]="control" matInput [matDatepicker]="datepickerEndRef"
+               [placeholder]="settings.title" (click)="datepickerEndRef.open()">
+        <mat-datepicker-toggle matSuffix [for]="datepickerEndRef">
+        </mat-datepicker-toggle>
+        <mat-datepicker #datepickerEndRef></mat-datepicker>
+    </ng-container>
+    <ng-container *ngSwitchCase="'select'">
+      <mat-select [formControl]="control" [multiple]="settings.isMulti">
+        <mat-option *ngFor="let opt of settings.options" [value]="opt.id">
+          {{opt.value}}
+        </mat-option>
+      </mat-select>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      <input matInput [name]="settings.name" [placeholder]="settings.title" [formControl]="control">
+      <button *ngIf="control.value" matSuffix mat-icon-button
+              aria-label="Clear"
+              (click)="control.setValue('')">
+        <mat-icon>close</mat-icon>
+      </button>
+    </ng-container>
+    </ng-container>
+<!--  <mat-error *ngIf="formControl.invalid" >{{formControl | error}}</mat-error>-->
+  <mat-hint *ngIf="settings.hint" align="start"><strong>{{settings.hint}}</strong></mat-hint>
+</mat-form-field>
+<ng-container *ngIf="settings.typed ==='boolean'">
+  <mat-checkbox [formControl]="control" >
+    {{settings.title}}
+  </mat-checkbox>
+</ng-container>

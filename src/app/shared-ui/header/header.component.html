@@ -1,0 +1,47 @@
+<div>
+  <mat-toolbar color="primary">
+    <button
+      type="button"
+      aria-label="Toggle sidenav"
+      mat-icon-button
+      (click)="drawer.toggle()"
+    >
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+    <span>Todo-elf</span>
+    <span class="spacer"></span>
+    <button *ngIf="!user || !user.id" mat-icon-button aria-label="login-button">
+      <mat-icon>login</mat-icon>
+    </button>
+    <button *ngIf="user && user.id" mat-icon-button [matMenuTriggerFor]="menu" aria-label="user-button with a menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>manage_accounts</mat-icon>
+        <span>Manage accounts</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport fixedTopGap="64"
+                 [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+                 [mode]="(isHandset$ | async) ? 'over' : 'side'"
+                 [opened]="(isHandset$ | async) === false">
+      <mat-toolbar>TodoList Elf</mat-toolbar>
+      <mat-nav-list>
+        <a mat-list-item href="#">Elf 1</a>
+        <a mat-list-item href="#">Ngrx Data</a>
+        <a mat-list-item href="#">Akita</a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+<!--      <router-outlet></router-outlet>-->
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
